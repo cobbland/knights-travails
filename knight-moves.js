@@ -6,23 +6,11 @@ function knightMoves(start, destination, moves = []) {
     }
     // Check if the knight has arrived.
     if (start === destination) {
-        console.log(`You made it in ${moves.length - 1}! Here is your path:`);
-        for (const move in moves) {
-            console.log(`[${moves[move]}]`);
-        }
+        youMadeIt(moves);
         return;
     }
 
-
-
-    moves.push(start);
-    moves.push(destination);
-
-    // Log the results.
-    console.log(`You made it in ${moves.length - 1}! Here is your path:`);
-    for (const move in moves) {
-        console.log(`[${moves[move]}]`);
-    }
+    const nextMoves = possibleMoves(start);
 }
 
 function inBounds(location) {
@@ -57,6 +45,13 @@ function possibleMoves(start) {
         }
     }
     return movesList;
+}
+
+function youMadeIt(moves) {
+    console.log(`You made it in ${moves.length - 1}! Here is your path:`);
+    for (const move in moves) {
+        console.log(`[${moves[move]}]`);
+    }
 }
 
 export { knightMoves };
