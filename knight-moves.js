@@ -22,9 +22,10 @@ function knightMoves(start, destination, moves = []) {
     }
 
     return updatedMoves;
-} // Currently exceeds maximum call stack. Probably because the knight keeps 
-  // making the first possible move, which moves it away or moves it back to 
-  // where it just was???
+} 
+// Currently above exceeds maximum call stack. Probably because the knight keeps 
+// making the first possible move, which moves it away or moves it back to 
+// where it just was???
 
 function inBounds(location) {
     let isInBounds = 0;
