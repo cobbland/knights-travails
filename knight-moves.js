@@ -1,31 +1,32 @@
-function knightMoves(start, destination, moves = []) {
-    // Base case:
+function knightMoves(start, destination) {
     // Make sure the move is allowed.
     if (!inBounds(start) || !inBounds(destination)) {
         return null;
     }
 
-    const currentPath = [...moves, start];
-
-    // Check if the knight has arrived.
+    // Make sure start and destination aren't the same.
     if (start[0] === destination[0] && start[1] === destination[1]) {
-        youMadeIt(currentPath);
-        return currentPath;
+        console.log("started at destination");
+        return youMadeIt([start, destination]);
     }
 
-    const nextMoves = possibleMoves(start).filter(move => {
-        return !currentPath.some(visited =>
-            visited[0] === move[0] && visited[1] === move[1]
-        );
-    });
-
-    for (const move of nextMoves) {
-        const result = knightMoves(move, destination, currentPath);
-        if (result) {
-            return result;
+    // Find the shortest path.
+    const moveQueue = [[start, [start]]];
+    while (moveQueue.length > 0) {
+        const current = moveQueue.shift();
+        const currentLocation = current[0];
+        const currentPath = current[1];
+        const nextMoves = possibleMoves(currentLocation);
+        for (const move of nextMoves) {
+            const newPath = [...currentPath, move];
+            if (move[0] === destination[0] && move[1] === destination[1]) {
+                return youMadeIt(newPath);
+            }
+            moveQueue.push([move, newPath]);
         }
     }
 
+    // If for some reason a path isn't found.
     return null;
 } 
 
@@ -64,7 +65,7 @@ function possibleMoves(start) {
 }
 
 function youMadeIt(moves) {
-    console.log(`You made it in ${moves.length - 1}! Here is your path:`);
+    console.log(`You made it in ${moves.length - 1} moves! Here is your path:`);
     for (const move in moves) {
         console.log(`[${moves[move]}]`);
     }
